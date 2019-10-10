@@ -118,8 +118,12 @@ class SignInPage extends Component {
 					className="signPageApp-content"
 				>
 					<div className="signPageApp-body">
-						<h1>
-							Notes
+						<h1
+							style={{
+								color: '#0c2136'
+							}}
+						>
+							Notify
 						</h1>
 						
 						<Form onSubmit={this.handleSubmit} className="login-form">

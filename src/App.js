@@ -15,10 +15,6 @@ class App extends Component {
 				<div>
 					<Route exact path="/" component={SignInScreen} />
 					<Route exact path="/landing" component={LandingScreen} />
-					{/*<Route exact path="/home" component={Landing} />*/}
-					{/*<Route exact path="/create" component={Create} />*/}
-					{/*<Route exact path="/tandc" component={TermsAndConditions} />*/}
-					{/*<Route exact path="/LandingPage" component={LandingPage} />*/}
 				</div>
 			</Router>
 		);
