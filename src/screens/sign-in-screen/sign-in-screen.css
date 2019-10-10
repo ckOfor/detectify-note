@@ -1,0 +1,42 @@
+.signPageApp {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-color: #0c2136;
+}
+
+
+.signPageApp-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    backgroundColor: '#0c2136',
+    /*padding: 40px;*/
+}
+
+.signPageApp-body {
+    height: 50%;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    border-radius: 50px 50px 50px 50px;
+    /*padding: 40px;*/
+    /*margin-left: 300px;*/
+}
+
+@media (min-width: 650px ) {
+    .App {
+        /*background-position: center center;*/
+    }
+
+    .signPageApp-content {
+        align-items: center;
+        justify-content: center;
+    }
+}
