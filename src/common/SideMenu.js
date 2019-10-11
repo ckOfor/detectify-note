@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 // third-party library
 import {
-  Layout, Menu, Icon
+  Layout, Menu, Icon, notification
 } from 'antd';
 
 const {
@@ -20,6 +20,34 @@ export default class SideMenu extends Component {
     const { isCollapsed } = this.props
     this.setState({ collapsed },
       () => isCollapsed(this.state.collapsed));
+  }
+	
+	/**
+	 * notification
+	 *
+	 * @param heading
+	 * @param message
+	 * @param type
+	 */
+	notification = (heading, message, type) => {
+		notification[`${type}`]({
+			message: `${heading}`,
+			description: `${message}`,
+			style: {
+				width: 600,
+				marginLeft: 335 - 600,
+			},
+		});
+	};
+  
+  logout = async () => {
+	  try {
+		  await localStorage.removeItem('userDetails')
+		  this.props.history.push("/")
+		  this.notification("Success", `User logged out successfully`, "success");
+	  } catch (error) {
+		  this.notification("Error", `User cannot be logged out at this time`, "error");
+	  }
   }
   
   render () {
@@ -59,18 +87,27 @@ export default class SideMenu extends Component {
               Manage
             </Menu.Item>
           </SubMenu>
-          
-          <Menu.Item
-            onClick={handleSideMenuSelection}
-            key="profile"
-          >
-            <Icon
-              type="user"
-            />
-            <span>
-              Profile
-            </span>
-          </Menu.Item>
+	
+	        <SubMenu
+		        key="sub2"
+		        title={
+			        <span>
+                <Icon
+	                type="user"
+                />
+                <span>
+                  Profile
+                </span>
+              </span>
+		        }
+	        >
+		        <Menu.Item
+			        onClick={this.logout}
+			        key="logout"
+		        >
+			        Logout
+		        </Menu.Item>
+	        </SubMenu>
         </Menu>
       </Sider>
     )

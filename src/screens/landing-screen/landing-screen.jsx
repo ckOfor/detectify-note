@@ -43,6 +43,15 @@ class LandingPage extends Component {
 		selectedView: 'create',
 	}
 	
+	
+	/**
+	 * componentDidMount
+	 */
+	componentDidMount () {
+		let userDetails = localStorage.getItem('userDetails')
+		return userDetails === null && this.props.history.push("/")
+	}
+	
 	/**
 	 * handleSideMenuSelection
 	 *
@@ -77,6 +86,7 @@ class LandingPage extends Component {
 					style={LAYOUT}
 				>
 					<SideMenu
+						history={this.props.history}
 						handleSideMenuSelection={this.handleSideMenuSelection}
 						isCollapsed={this.handleCollapsed}
 					/>

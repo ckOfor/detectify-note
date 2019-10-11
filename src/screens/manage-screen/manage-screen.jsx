@@ -227,7 +227,7 @@ class ManagePage extends Component {
 			.then((response) => {
 				if(response.data.status) {
 					this.notification("Success!", `${response.data.message}`, "success");
-					let newState = this.state.data.filter( item=> item != this.state.data[index]  )
+					let newState = this.state.data.filter( item=> item !== this.state.data[index]  )
 					this.setState({ data: newState, isRefreshing: false });
 					
 				}
@@ -281,19 +281,9 @@ class ManagePage extends Component {
 		this.setState({ content: content })
 	}
 	
-	
-	/**
-	 * handleFocus
-	 *
-	 * @param record
-	 */
-	handleFocus = (record) => {
-		this.setState({ noteId: record.id })
-	}
-	
 	render () {
 		const {
-			isRefreshing, isLoading, data, category, content, selectedNote
+			isRefreshing, isLoading, data, category, content,
 		} = this.state
 		const { getFieldDecorator } = this.props.form
 		

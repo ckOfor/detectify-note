@@ -21,7 +21,6 @@ class CreatePage extends Component {
 	state = {
 		model: 'Start typing',
 		isLoading: false,
-		// URL: 'http://localhost:8000/api/user',
 		URL: 'https://detectify-note-app.herokuapp.com/api/user',
 		category: '',
 		content: '',
