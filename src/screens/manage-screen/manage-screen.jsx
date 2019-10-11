@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 
 // third-party react library
 import {
-	Table, Input, Button, Icon, Form, Spin, notification, Badge, Dropdown, Menu,
-	Avatar
+	Table, Input, Button, Icon, Form, Spin, notification, Modal
 } from 'antd'
 import Highlighter from 'react-highlight-words';
 import axios from 'axios'
@@ -13,17 +12,7 @@ import axios from 'axios'
 import './manage-screen.css';
 import FroalaEditor from 'react-froala-wysiwyg'
 
-const ROOT = {
-	height: '100%',
-	width:  '100%',
-	position: 'absolute',
-	top: 0,
-	left: 0
-}
-
-const LAYOUT = {
-	minHeight: '100vh'
-}
+const { confirm } = Modal;
 
 class ManagePage extends Component {
 	state={
@@ -64,15 +53,15 @@ class ManagePage extends Component {
 		});
 	};
 	
+	/**
+	 * getAllNotes
+	 */
 	getAllNotes = () => {
 		const { URL, userId } = this.state
 		this.setState({ isLoading: true })
 		
-		// axios.get(`${URL}/1/notes`)
 		axios.get(`${URL}/${userId}/notes`)
 			.then((response) => {
-				console.log(response.data)
-				// this.setState({ isLoading: false })
 				this.setState({ isLoading: false, data: response.data })
 				this.notification("Notes!", `Notes retrieved successfully`, "success")
 			})
@@ -166,25 +155,31 @@ class ManagePage extends Component {
 		this.setState({ searchText: '' });
 	}
 	
-	getNoteId = (record) => {
-		console.log('called', record)
+	/**
+	 * getNoteId
+	 *
+	 * @param record
+	 * @param number
+	 */
+	getNoteId = (record, number) => {
 		const { data }  = this.state
 		let index;
 		Object.keys(data).forEach((note) => {
 			if(record.id === data[note].id) {
-				console.log('Yas')
 				return index = note
 			}
 		})
 		
-		this.setState({index}, () => this.updateNote())
+		return number === 0 ? this.updateNote(index) : this.deleteNote(index)
 	}
 	
 	/**
+	 * updateNote
 	 *
+	 * @param index
 	 */
-	updateNote = () => {
-		const { URL, userId, category, content, index, noteId } = this.state
+	updateNote = (index) => {
+		const { URL, userId, category, content, noteId } = this.state
 		
 		this.setState({ isRefreshing: true })
 
@@ -193,8 +188,6 @@ class ManagePage extends Component {
 			category
 			})
 			.then((response) => {
-				console.log(response.data)
-				console.log(response.data.data)
 				this.setState({
 					loading: false
 				})
@@ -202,16 +195,11 @@ class ManagePage extends Component {
 					let newState = Object.assign({}, this.state);
 					newState.data[index.toString()] = response.data.data;
 					this.setState(newState);
-
 					this.notification("Success!", `${response.data.message}`, "success");
 					this.setState({
-						// content: response.data.data.content,
-						// category: response.data.data.category,
 						isRefreshing: false
 					})
 				}
-				// this.setState({ isLoading: false, data: response.data })
-				// this.notification("Posts!", `Tours retrieved successfully`, "success")
 			})
 			.catch((error) => {
 				console.log(error)
@@ -223,6 +211,54 @@ class ManagePage extends Component {
 					this.notification("Error", `${error.response.data.message}`, "error");
 				}
 			});
+	}
+	
+	/**
+	 * deleteNote
+	 * @param index
+	 * @param val
+	 */
+	deleteNote = (index) => {
+		const { URL, userId, noteId } = this.state
+		
+		this.setState({ isRefreshing: true })
+
+		axios.delete(`${URL}/${userId}/notes/${noteId}`)
+			.then((response) => {
+				if(response.data.status) {
+					this.notification("Success!", `${response.data.message}`, "success");
+					let newState = this.state.data.filter( item=> item != this.state.data[index]  )
+					this.setState({ data: newState, isRefreshing: false });
+					
+				}
+			})
+			.catch((error) => {
+				console.log(error)
+				this.setState({ isRefreshing: false })
+				if(error.response === undefined) {
+					this.notification("Error", `Connection Error`, "error");
+				} else {
+					console.log(error.response);
+					this.notification("Error", `${error.response.data.message}`, "error");
+				}
+			});
+	}
+	
+	/**
+	 *
+	 */
+	showDeleteConfirm = (record, number) => {
+		confirm({
+			title: 'Are you sure delete this note?',
+			content: 'You would loose this note forever',
+			okText: 'Yes',
+			okType: 'danger',
+			cancelText: 'No',
+			onOk: () => this.getNoteId(record, number),
+			onCancel() {
+				// console.log('Cancel');
+			},
+		});
 	}
 	
 	/**
@@ -256,28 +292,10 @@ class ManagePage extends Component {
 	}
 	
 	render () {
-		console.log(this.state)
 		const {
 			isRefreshing, isLoading, data, category, content, selectedNote
 		} = this.state
 		const { getFieldDecorator } = this.props.form
-		
-		const menu = (
-			<Menu>
-				<Menu.Item
-					// onClick={this.handleEditTour}
-					key={'open'}
-				>
-					open
-				</Menu.Item>
-				<Menu.Item
-					// onClick={this.handleEditTour}
-					key={'closed'}
-				>
-					closed
-				</Menu.Item>
-			</Menu>
-		);
 		
 		/**
 		 * columns
@@ -376,7 +394,7 @@ class ManagePage extends Component {
 									color: '#FFFFFF',
 								}}
 								disabled={isRefreshing}
-								onClick={() => this.getNoteId(record)}
+								onClick={() => this.getNoteId(record, 0)}
 								icon="save"
 							>
 								UPDATE
@@ -391,7 +409,8 @@ class ManagePage extends Component {
 									marginTop: 30,
 								}}
 								disabled={isRefreshing}
-								onClick={() => this.updateNote(record)}
+								onClick={() => this.showDeleteConfirm(record, 1)}
+								// onClick={() => this.getNoteId(record, 1)}
 								icon="delete"
 							>
 								DELETE
@@ -445,7 +464,6 @@ class ManagePage extends Component {
 								}) }
 								locale={{ items_per_page: '9' }}
 								defaultPageSize={5}
-								onSelect={(record) => console.log(record)}
 								loading={isLoading}
 								className="components-table-demo-nested"
 								rowKey={record => record.id}

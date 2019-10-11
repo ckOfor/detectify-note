@@ -22,6 +22,7 @@ class SignInPage extends Component {
 		email: '',
 		password: '',
 		URL: 'https://detectify-note-app.herokuapp.com/api/user/create',
+		// URL: 'http://localhost:8000/api/user/create',
 	}
 	
 	/**
@@ -29,7 +30,7 @@ class SignInPage extends Component {
 	 */
 	componentDidMount () {
 		let userDetails = localStorage.getItem('userDetails')
-		return Object.keys(userDetails).length > 1 && this.props.history.push("/landing")
+		// return Object.keys(userDetails).length > 1 && this.props.history.push("/landing")
 	}
 	
 	/**

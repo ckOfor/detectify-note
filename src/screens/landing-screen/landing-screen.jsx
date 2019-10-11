@@ -87,15 +87,15 @@ class LandingPage extends Component {
 							<Breadcrumb
 								style={BREADCRUMB}
 							/>
-							{/*{*/}
-							{/*	selectedView === 'create' && (*/}
-							{/*		<CreateScreen*/}
-							{/*			history={this.props.history}*/}
-							{/*		/>*/}
-							{/*	)*/}
-							{/*}*/}
 							{
 								selectedView === 'create' && (
+									<CreateScreen
+										history={this.props.history}
+									/>
+								)
+							}
+							{
+								selectedView === 'manage' && (
 									<ManageScreen
 										isCollapsed={isCollapsed}
 										history={this.props.history}
