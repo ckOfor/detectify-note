@@ -30,6 +30,7 @@ class SignInPage extends Component {
 	 */
 	componentDidMount () {
 		let userDetails = localStorage.getItem('userDetails')
+		if(userDetails !== null)
 		return Object.keys(userDetails).length > 1 && this.props.history.push("/landing")
 	}
 	
