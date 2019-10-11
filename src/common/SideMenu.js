@@ -41,7 +41,7 @@ export default class SideMenu extends Component {
                   type="global"
                 />
                 <span>
-                  Tours
+                  Notes
                 </span>
               </span>
             }
