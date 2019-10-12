@@ -6,11 +6,11 @@ import { Form, Layout, Breadcrumb } from 'antd';
 
 // screens
 import { CreateScreen } from '../create-screen'
+import { ManageScreen } from '../manage-screen'
 
 // common
 import HeaderPage from '../../common/HeaderPage'
 import SideMenu from '../../common/SideMenu'
-import { ManageScreen } from '../manage-screen'
 
 const { Content, Footer } = Layout;
 

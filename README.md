@@ -1,4 +1,20 @@
+## Notify
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Notify App is hoted [here](https://notifynoteapp.herokuapp.com), or visit `https://notifynoteapp.herokuapp.com`.
+Features include
+* Users can sign in.
+* Users can sign up.
+* Users can create a notes.
+* Users can edit a notes.
+* Users can delete a notes.
+* Users can navigate through multiple notes.
+* Users can search to find note.
+* Users can get all notes.
+* Users can create note with category.
+* Users can get notes by category.
+* Markdown editor available for user to edit notes.
 
 ## Available Scripts
 

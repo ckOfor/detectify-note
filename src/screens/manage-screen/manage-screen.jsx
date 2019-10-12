@@ -7,10 +7,10 @@ import {
 } from 'antd'
 import Highlighter from 'react-highlight-words';
 import axios from 'axios'
+import FroalaEditor from 'react-froala-wysiwyg'
 
 // styles
 import './manage-screen.css';
-import FroalaEditor from 'react-froala-wysiwyg'
 
 const { confirm } = Modal;
 
@@ -24,7 +24,6 @@ class ManagePage extends Component {
 		selectedNote: [],
 		category: '',
 		content: '',
-		// URL: 'http://localhost:8000/api/user',
 		pageNumber: 1
 	}
 	
@@ -416,11 +415,14 @@ class ManagePage extends Component {
 		
 		return (
 			<div
-				style={{
-					padding: 24,
-					background: '#fff',
-					height: '90%',
-				}}>
+				className="ManagePageApp"
+			>
+				<div
+					className="ManagePageApp-content"
+				>
+					<div
+						className="ManagePageApp-body"
+					>
 				{
 					isLoading ? (
 							<div >
@@ -471,6 +473,8 @@ class ManagePage extends Component {
 							/>
 						</div>
 				}
+					</div>
+				</div>
 			</div>
 		)
 	}
