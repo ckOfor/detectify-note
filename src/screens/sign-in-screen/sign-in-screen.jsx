@@ -138,6 +138,7 @@ class SignInPage extends Component {
 									}],
 								})(
 									<Input
+										className="email"
 										name={'email'}
 										onChange={this.onChange}
 										prefix={
@@ -157,6 +158,7 @@ class SignInPage extends Component {
 								})(
 									<Input.Password
 										name={'password'}
+										className="password"
 										onChange={this.onChange}
 										prefix={
 											<Icon

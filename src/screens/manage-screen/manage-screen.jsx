@@ -346,6 +346,7 @@ class ManagePage extends Component {
 								}],
 							})(
 								<Input
+									className="category"
 									disabled={isLoading}
 									name={'category'}
 									onChange={this.handleCategoryOnChange}
@@ -386,6 +387,7 @@ class ManagePage extends Component {
 								disabled={isRefreshing}
 								onClick={() => this.getNoteId(record, 0)}
 								icon="save"
+								className="update"
 							>
 								UPDATE
 							</Button>
@@ -398,6 +400,7 @@ class ManagePage extends Component {
 									marginLeft: 30,
 									marginTop: 30,
 								}}
+								className="delete"
 								disabled={isRefreshing}
 								onClick={() => this.showDeleteConfirm(record, 1)}
 								// onClick={() => this.getNoteId(record, 1)}
